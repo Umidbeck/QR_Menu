@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container mt-5">
+        <div class="card shadow-lg border-0 rounded-4" style="max-width: 400px; margin: 0 auto;">
+            <div class="card-header bg-danger text-white text-center py-3">
+                <h2 class="mb-0">Олиб ташлаш</h2>
+            </div>
+            <div class="card-body p-4 text-center">
+                <p>Сиз <strong>{{ object.name }}</strong> махсулотни олиб ташламоқчисиз. Ишонchingиз комилми?</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Ҳа, олиб ташлаш</button>
+                    <a href="{% url 'home' %}" class="btn btn-secondary ms-2">Йўқ, қайтиш</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

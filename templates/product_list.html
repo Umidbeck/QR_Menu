@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <header>
+        <h1>Таомлар (Буюртма)</h1>
+        <a href="{% url 'home' %}"><img src="/media/img/exit.svg" alt="" width="40" height="40"></a>
+    </header>
+    <br>
+    <br>
+
+    <section class="products">
+        <section id="salatlar" class="product-category active">
+            {% for product in products %}
+                <div class="card">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    <div class="card-content">
+                        <h3>{{ product.name }}</h3>
+                        <p>{{ product.price }} сум</p>
+                        {% if is_admin %}
+                            <div class="admin-actions mt-2">
+                                <a href="{% url 'product_edit' pk=product.pk %}" class="btn btn-warning btn-sm me-2">Тахрирлаш</a>
+                                <form action="{% url 'product_delete' pk=product.pk %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Ушбу махсулотни олиб ташламоқchimisиз?');">Олиб ташлаш</button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+    </section>
+
+    <!-- FontAwesome iconlarini ishlashi uchun -->
+    <script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    <script src="script.js"></script>
+{% endblock %}

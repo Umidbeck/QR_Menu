@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-5 d-flex justify-content-center">
+        <div class="card shadow-lg border-0 rounded-4" style="max-width: 400px; background: #f8f9fa;">
+            <div class="card-header bg-success text-white text-center py-4" style="border-radius: 4px 4px 0 0;">
+                <h2 class="mb-0 fw-bold">Рўйхатдан ўтиш</h2>
+            </div>
+            <div class="card-body p-4">
+                <form method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label fw-bold text-dark">{{ field.label }}</label>
+                            {{ field|add_class:"form-control form-control-lg" }}
+                            {% if field.errors %}
+                                <div class="text-danger mt-1">{{ field.errors }}</div>
+                            {% elif field.help_text %}
+                                <small class="text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                            <div class="invalid-feedback">
+                                {% if field.label == 'Username' %}Илтимос, фойдаланувчи номи киритинг!{% endif %}
+                                {% if field.label == 'Password' %}Илтимос, парол киритинг!{% endif %}
+                                {% if field.label == 'Password confirmation' %}Илтимос, паролни қайта тасдиқланг!{% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-success w-100 py-2 fs-5 rounded-pill" style="background-color: #198754; border: none;">
+                        Рўйхатдан ўтиш
+                    </button>
+                </form>
+                <div class="text-center mt-3">
+                    <a href="{% url 'login' %}" class="text-decoration-none text-success fw-medium">Аккаунтга кириш</a>
+                </div>
+            </div>
+            <div class="card-footer text-center py-3 bg-light">
+                <small class="text-muted">© 2025 QR Menu. Барча ҳуқуқлар ҳимояланган.</small>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Bootstrap validation
+        (function () {
+            'use strict';
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+{% endblock %}

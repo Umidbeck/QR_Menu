@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-5 d-flex justify-content-center">
+        <div class="card shadow-lg border-0 rounded-4" style="max-width: 400px; background: #f8f9fa;">
+            <div class="card-header bg-primary text-white text-center py-4" style="border-radius: 4px 4px 0 0;">
+                <h2 class="mb-0 fw-bold">Кириш</h2>
+            </div>
+            <div class="card-body p-4">
+                {% if error %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ error }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+                <form method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="username" class="form-label fw-bold text-dark">Фойдаланувчи номи</label>
+                        <input type="text" class="form-control form-control-lg" id="username" name="username" required>
+                        <div class="invalid-feedback">Илтимос, фойдаланувчи номи киритинг!</div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="password" class="form-label fw-bold text-dark">Парол</label>
+                        <input type="password" class="form-control form-control-lg" id="password" name="password" required>
+                        <div class="invalid-feedback">Илтимос, парол киритинг!</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2 fs-5 rounded-pill" style="background-color: #0d6efd; border: none;">
+                        Кириш
+                    </button>
+                </form>
+                <div class="text-center mt-3">
+                    <a href="{% url 'register' %}" class="text-decoration-none text-primary fw-medium">Рўйхатдан ўтиш</a>
+                </div>
+            </div>
+            <div class="card-footer text-center py-3 bg-light">
+                <small class="text-muted">&copy; 2025 QR Menu. Барча ҳуқуқлар ҳимояланган.</small>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Bootstrap validation
+        (function () {
+            'use strict';
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+{% endblock %}
